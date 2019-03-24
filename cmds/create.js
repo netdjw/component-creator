@@ -82,7 +82,7 @@ function appendToParent(data) {
     const import_folder = (data.parent_name === 'main' ? 'components/' : '') + data.name + '/'
 
     const jsfile = data.parent_path + data.parent_name + '.js'
-    fs.appendFileSync(jsfile, 'import '+ data.name +' from \'' + import_folder + data.name + '.js\';\n', function(err) {
+    fs.appendFileSync(jsfile, 'import '+ data.name +' from \'./' + import_folder + data.name + '.js\';\n', function(err) {
         if (err) {
             console.error('Error at appending to ' + jsfile + ': ' + err)
         }
@@ -96,7 +96,7 @@ function appendToParent(data) {
     })
 
     const htmlfile = data.parent_path + data.parent_name + '.html'
-    fs.appendFileSync(htmlfile, '\n<div id="' + data.name + '">${require(\'' + import_folder + data.name + '.html\')}</div>\n', function(err) {
+    fs.appendFileSync(htmlfile, '\n<div id="' + data.name + '">${require(\'./' + import_folder + data.name + '.html\')}</div>\n', function(err) {
         if (err) {
             console.error('Error at appending to ' + htmlfile + ': ' + err)
         }
