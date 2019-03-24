@@ -1,5 +1,4 @@
 let fs = require('fs');
-let dir = './teszt';
 let path = '';
 
 process.argv.forEach(function (val, index, array) {
@@ -33,7 +32,12 @@ for (let i = 0; i < path_items.length; i++) {
     }
 }
 
-// create compoent files
+/**
+ * Create component files
+ * @param {string} path 
+ * @param {string} name 
+ * @param {string} parent 
+ */
 function createComponentFiles(path, name, parent) {
     console.log('\nCreating component files:\n' + name + ' (parent: ' + parent + ')');
     createDir( path + 'img' );
@@ -97,6 +101,10 @@ function createComponentFiles(path, name, parent) {
     }
 }
 
+/**
+ * Create a directory in the src/ folder.
+ * @param {string} dir 
+ */
 function createDir(dir) {
     if (!fs.existsSync('src/' + dir)) {
         fs.mkdirSync('src/' + dir);
@@ -104,6 +112,10 @@ function createDir(dir) {
     }
 }
 
+/**
+ * Create a file in the src/ folder.
+ * @param {string} file 
+ */
 function createFile(file) {
     file = 'src/' + file;
     if (!fs.existsSync(file)) {
