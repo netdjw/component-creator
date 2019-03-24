@@ -1,0 +1,25 @@
+{
+  "name": "@djw/component-creator",
+  "version": "1.0.1",
+  "description": "Create small components in a sitebuild project.",
+  "main": "init.js",
+  "scripts": {
+    "test": "echo \"Nothing to test here\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/netdjw/component-creator.git"
+  },
+  "keywords": [
+    "sitebuild",
+    "components",
+    "component",
+    "creator"
+  ],
+  "author": "Balázs Winkler",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/netdjw/component-creator/issues"
+  },
+  "homepage": "https://github.com/netdjw/component-creator#readme"
+}
