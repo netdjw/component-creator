@@ -2,9 +2,12 @@
   "name": "@djw/component-creator",
   "version": "1.0.1",
   "description": "Create small components in a sitebuild project.",
-  "main": "init.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Nothing to test here\" && exit 1"
+  },
+  "bin": {
+    "ccreator": "./bin/ccreator"
   },
   "repository": {
     "type": "git",
@@ -21,5 +24,8 @@
   "bugs": {
     "url": "https://github.com/netdjw/component-creator/issues"
   },
-  "homepage": "https://github.com/netdjw/component-creator#readme"
+  "homepage": "https://github.com/netdjw/component-creator#readme",
+  "dependencies": {
+    "minimist": "^1.2.0"
+  }
 }
