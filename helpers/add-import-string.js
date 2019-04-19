@@ -1,6 +1,6 @@
 const fs = require('fs')
 
-module.exports = (file, importString, importRegexp) => {
+module.exports = (file, importString, importRegexp, fallbackImportRegexp) => {
     let isDuplicate = false
 
     // read file into an array
@@ -13,18 +13,25 @@ module.exports = (file, importString, importRegexp) => {
         if ( fileContent[i] === importString ) {
             // this is a duplicate
             isDuplicate = true
-            console.error(file, ' duplicate string ', importString)
             break
         }
 
         if ( fileContent[i].match(importRegexp) ) {
-            console.log('match found', i)
             lastImportIndex = i
+        }
+
+    }
+
+    // fallback
+    if ( lastImportIndex === 0 && fallbackImportRegexp !== undefined ) {
+        for (let i = 0; i < fileContent.length; i++) {
+            if ( fileContent[i].match(fallbackImportRegexp) ) {
+                lastImportIndex = i - 1
+            }
         }
     }
 
     if ( !isDuplicate ) {
-        console.log('-- not a duplicate', lastImportIndex+1)
         fileContent.splice(lastImportIndex + 1, 0, importString)
         fs.writeFileSync(file, fileContent.join('\n'))
     }
