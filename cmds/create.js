@@ -23,6 +23,7 @@ module.exports = (args) => {
     // let parent = ''
     for (let i = 0; i < path_items.length; i++) {
         new_path += path_items[i] + '/'
+        const current_path = new_path.split('/')
         createDir( 'src/components/' + new_path )
         if ( new_path !== '' ) {
             let parent
@@ -32,7 +33,16 @@ module.exports = (args) => {
             if ( parent === undefined ) {
                 parent = 'main'
             }
-            createComponentFiles(new_path, path_items[i], parent)
+
+            if (
+                (path_items.length > 1 && parent != 'main') ||
+                (current_path.length === 1 && parent === 'main' && !fs.existsSync('src/components' + new_path)) ||
+                (path_items.length === 1 && parent === 'main')
+            ) {
+                if ( !fs.existsSync('src/components' + new_path) ) {
+                    createComponentFiles(new_path, path_items[i], parent)
+                }
+            }
         }
     }
 
@@ -82,7 +92,9 @@ function appendToParent(data) {
     const import_folder = (data.parent_name === 'main' ? 'components/' : '') + data.name + '/'
 
     const jsfile = data.parent_path + data.parent_name + '.js'
-    fs.appendFileSync(jsfile, 'import '+ data.name +' from \'./' + import_folder + data.name + '.js\';\n', function(err) {
+    let jsVariableName = data.name;
+    jsVariableName = jsVariableName.replace(/\-/g, '_');
+    fs.appendFileSync(jsfile, 'import '+ jsVariableName +' from \'./' + import_folder + data.name + '.js\';\n', function(err) {
         if (err) {
             console.error('Error at appending to ' + jsfile + ': ' + err)
         }
