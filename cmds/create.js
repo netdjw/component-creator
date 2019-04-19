@@ -1,5 +1,8 @@
 const createDir = require('../helpers/create-dir')
 const createFile = require('../helpers/create-file')
+const jsFile = require('../helpers/file-javascript')
+const sassFile = require('../helpers/file-sass')
+const htmlFile = require('../helpers/file-html')
 const fs = require('fs')
 
 module.exports = (args) => {
@@ -91,26 +94,7 @@ function createComponentFiles(path, name, parent) {
 function appendToParent(data) {
     const import_folder = (data.parent_name === 'main' ? 'components/' : '') + data.name + '/'
 
-    const jsfile = data.parent_path + data.parent_name + '.js'
-    let jsVariableName = data.name;
-    jsVariableName = jsVariableName.replace(/\-/g, '_');
-    fs.appendFileSync(jsfile, 'import '+ jsVariableName +' from \'./' + import_folder + data.name + '.js\';\n', function(err) {
-        if (err) {
-            console.error('Error at appending to ' + jsfile + ': ' + err)
-        }
-    })
-
-    const scssfile = data.parent_path + (data.parent_name === 'main' ? data.parent_name : '_' + data.parent_name) + '.scss'
-    fs.appendFileSync(scssfile, '@import \'' + import_folder + data.name + '\';\n', function(err) {
-        if (err) {
-            console.error('Error at appending to ' + scssfile + ': ' + err)
-        }
-    })
-
-    const htmlfile = data.parent_path + data.parent_name + '.html'
-    fs.appendFileSync(htmlfile, '\n<div id="' + data.name + '">${require(\'./' + import_folder + data.name + '.html\')}</div>\n', function(err) {
-        if (err) {
-            console.error('Error at appending to ' + htmlfile + ': ' + err)
-        }
-    })
+    jsFile(import_folder, data)
+    sassFile(import_folder, data)
+    htmlFile(import_folder, data)
 }
